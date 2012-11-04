@@ -3,6 +3,8 @@ SwitchBoard
 
 Attempt formalize client-server web communication using Javascript and PHP
 
+[![Build Status](https://travis-ci.org/lcallarec/SwitchBoard.png)](https://travis-ci.org/lcallarec/SwitchBoard)
+
 Why SwitchBoard ?
 =================
 
