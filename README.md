@@ -3,13 +3,21 @@ SwitchBoard
 
 Attempt formalize client-server web communication using Javascript and PHP
 
-The idea behind SwitchBoard is that there is no way I know to manage client-server->client communication on large web application. 
+Why SwitchBoard ?
+=================
 
-When using jQuery, we all use `$.ajax()` method to handle asynchronous communication with the server, and handle the response. Perhaps, we display a loading message, block a HTML content, and so on. Dozens of times, the same code is repeated.
+Behind SwitchBoard, there is a conclusion : currently, there is no way I know to manage client-server->client communication on large web applications using Javascript and PHP.
 
-The only mean to get this things working is methodology. And documentation. And functional tests.
+When using jQuery, we all use `$.ajax()` method to handle asynchronous communication with the server, and handle the response inside the `success` callback function. Dozens of times, the same code will be repeated : a loading message is display on load, an HTML panel is 'blocked' until the server response, and on any errors, we display a message inside the appropriate panel. And so on. I don't even mentionned buisiness treatments once we get the response. 
 
-We I look at how .NET and J2EE plateforms are managing web applications, I see that client and server sides know each others. While it is not possible to do this on PHP (at least, not without huge performance lost), we can do a lot of things to formalize client->server communications and unify the way request / response are handled.
+The only way to get this things working is methodology. And documentation. And functional tests.
+
+*This is not a fully secure way, because the software never help you*
+
+Around use... I see...
+============================
+
+... how .NET and J2EE plateforms are managing web applications, where client and server sides know a lot of things about each others. While it is not possible to do this with plain PHP (at least, not without huge performance lost), we can give an impulsion to formalize client->server->client communications and unify the way request / response are handled.
 
 ###SwitchBoard objectives
 
