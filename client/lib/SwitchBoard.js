@@ -91,6 +91,7 @@ SwitchBoard = function() {
 			var response = {'open.remote.modale' : {'data' : 10}, 'open.remote.modale2' : {'data' : 8}};
 
             for(key in response) {
+
                 this.fire(key, response[key]);
             }
 
@@ -104,25 +105,29 @@ SwitchBoard = function() {
 		* @param Object		data
 		* @param Object 	callbacks	{done: {}, fail: {}}
 		**/
-//		SwitchBoard.prototype.connect = function(type, url, data, callbacks) {
-//
-//			var callbacks = $.extend(callbacks, {dones: {}, fails: {}});
-//
-//			var response = {};
-//
-//			var promise = $.ajax(function() {
-//				type: type,
-//				url: url,
-//				dataType: json,
-//				data: data,
-//				success: function(data) {
-//					response = data;
-//				},
-//				error: function() {
-//
-//				}
-//			});
-//
+		SwitchBoard.prototype.connect = function(url, data, type, callbacks) {
+
+            var $this = this;
+
+			var cb = $.extend(callbacks, {dones: {}, fails: {}});
+
+			var promise = $.ajax({
+				type: type,
+				url: url,
+				dataType: 'json',
+				data: data,
+				success: function(response) {
+                    for(i in response.channels) {
+                        $this.fire(response.channels[i].channel, response.channels[i].data);
+                    }
+				},
+				error: function() {
+
+				}
+			}).done(function(){
+
+            });
+
 //			for(done in callbacks.dones) {
 //				promise.done(done);
 //			}
@@ -130,14 +135,8 @@ SwitchBoard = function() {
 //			for(fail in callbacks.fails) {
 //				promise.fail(fail);
 //			}
-//
-//			response.channel = 'open.remote.modale';
-//			response.errors  = {};
-//			response.data 	  = {title: "hello !", content: "yo!"};
-//
-//			return this.fire(response.channel, response);
-//
-//		};
+
+		};
 
 		SwitchBoard.initialized = true;
 	}
@@ -254,22 +253,4 @@ SwitchBoard.Collection = function(collection) {
 }
 
 
-sb = new SwitchBoard();
 
-sb.register('open.remote.modale', function(response) {
-
-	if(confirm('oula' + response.data)) {
-
-	}
-
-})
-
-sb.register('open.remote.modale2', function(response) {
-
-	if(confirm('oula2' + response.data)) {
-
-	}
-
-})
-
-sb.testConnect('POST', 'test.php', {a: 11, command: {a: 5}});

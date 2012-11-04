@@ -7,6 +7,8 @@ sb = new SwitchBoard();
 *
 * S'il existe, cela signifie que tous les channels qu'il prend en charge partagent une même interface
 *
+* Le callback doit alors prendre un second argument, handled, qui correspond au suffixe non pris en compte
+*
 */
 
 sb.register('dom.hide', function(response) {

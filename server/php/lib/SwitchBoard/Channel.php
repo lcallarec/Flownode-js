@@ -55,12 +55,12 @@ class Channel
 
     /**
      * Return an array represntation of this channel
-     * 
+     *
      * @return array
      */
     public function toArray()
     {
-        return array($this->name => $this->data);
+        return array('channel' => $this->name, 'data' => $this->data);
     }
 
 }

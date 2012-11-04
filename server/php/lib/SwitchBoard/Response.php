@@ -28,10 +28,10 @@ class Response
     /**
      * Add a channel to the response
      *
-     * @param \SwitchBoard\Channel $channel
+     * @param $channel
      * @return \SwitchBoard\Response
      */
-    public function add(Channel $channel)
+    public function add($channel)
     {
         $this->channels->append($channel);
 
@@ -46,7 +46,6 @@ class Response
      */
     public function toJSON($jsonOption = 0)
     {
-
         return $this->channels->toJSON($jsonOption);
     }
 

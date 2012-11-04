@@ -66,7 +66,9 @@ $myClass = new MyClass();
 $sb->register('open.remote.modal.static', array('MyClass', 'staticMethod'));
 $sb->register('open.remote.modal.instance', array($myClass, 'instanceMethod'));
 
-$response = $sb->connect($data);
+$sb->register('open_test', function($response, $data){ return new Channel('alert', array('message' => 'couycou'));});
+
+$response = $sb->connect($_POST);
 
 echo $response->toJSON();
 

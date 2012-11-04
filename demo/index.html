@@ -14,10 +14,22 @@
 <body>
 
 <div id="a">
-fdfdfd
+test
 </div>
 
 	<script type="text/javascript">
+
+sb = new SwitchBoard();
+
+sb.register('alert', function(data) {
+
+	alert(data.message);
+
+})
+
+sb.connect('http://localhost:8080/demo/index.php', {'open.test' : {a: 5}}, 'POST');
+
+
 
 //
 //		module('Collection', {

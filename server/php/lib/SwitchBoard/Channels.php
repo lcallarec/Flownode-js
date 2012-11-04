@@ -19,7 +19,7 @@ class Channels extends Collection
         $array = array();
         foreach($this->getData() as $channel) {
 
-            $array[] = $channel->toArray();
+            $array['channels'][] = $channel->toArray();
 
         }
 
