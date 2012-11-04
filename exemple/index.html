@@ -1,0 +1,91 @@
+<!doctype html>
+<html dir="ltr" lang="en-US">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="../client/lib/qunit.css">
+	<script src="../client/ext/jquery.1.7.2.min.js"></script>
+	<script src="../client/lib/SwitchBoard.js"></script>
+	<script src="../client/lib/qunit.js"></script>
+</head>
+<body>
+
+
+<script type="text/javascript">
+
+    sb = new SwitchBoard();
+
+    sb.register('alert', function(data) {
+
+        alert(data.message);
+
+    })
+
+    sb.connect('http://localhost:8080/demo/index.php', {'open.test' : {a: 5}}, 'POST');
+
+//		module('Collection', {
+//			setup : function(){
+//				c = new $.Collection([]);
+//			},
+//			teardown : function(){
+//				c = null;
+//			}
+//		});
+//
+//		test("Adding / Getting by name (integer)", function() {
+//
+//			c.add(2, 'zsx');
+//
+//			equal(c.getByName(2), 'zsx');
+//		});
+//
+//		test("Adding / Getting by name (string)", function() {
+//
+//			c.add('a', 'aqw');
+//
+//			equal(c.getByName('a'), 'aqw');
+//		});
+//
+//
+//		module('SwitchBoard', {
+//			setup : function(){
+//				sb = new $.SwitchBoard();
+//				sb.register('a', function() {f = 5;});
+//				sb.register('testchannel', function() { equal(1, 1); });
+//			},
+//			teardown : function(){
+//				sb = null;
+//			}
+//		});
+//
+//
+//		test("Adding / Getting a channel", function() {
+//
+//			channel = sb.getChannel('a');
+//
+//			equal(typeof channel, 'function');
+//
+//		});
+//
+//		test("Getting an inexistant channel", function() {
+//
+//			channel = sb.getChannel('rezrze');
+//
+//			notEqual(typeof channel, 'undefined');
+//
+//		});
+//
+//		test("Exec a function", function() {
+//
+//			expect(2);
+//
+//			sb.fire('testchannel');
+//			sb.fire('testchannel');
+//		});
+
+
+
+	</script>
+ <div id="qunit"></div>
+ <div id="qunit-fixture"></div>
+</body>
+</html>
