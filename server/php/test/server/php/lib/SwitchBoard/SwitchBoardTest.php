@@ -22,7 +22,7 @@ class SwitchBoardTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->sb = new SwitchBoard;
+        $this->sb = SwitchBoard::get();
     }
 
     /**
@@ -52,10 +52,9 @@ class SwitchBoardTest extends \PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $sb = SwitchBoard::get();
+
+        $this->assertInstanceOf('SwitchBoard\SwitchBoard', $sb);
     }
 
     /**
@@ -83,5 +82,3 @@ class SwitchBoardTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-?>

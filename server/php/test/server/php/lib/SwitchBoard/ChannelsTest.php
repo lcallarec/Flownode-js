@@ -17,14 +17,23 @@ class ChannelsTest extends \PHPUnit_Framework_TestCase
     protected $channels;
 
     /**
+     * A channel name
+     *
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp()
     {
+        $this->name = 'channel';
+
         $this->channels = new Channels();
 
-        $channel = new Channel('name', array('test' => 'pk'));
+        $channel = new Channel($this->name, array('test' => 'pk'));
 
         $this->channels->append($channel);
 
@@ -47,7 +56,7 @@ class ChannelsTest extends \PHPUnit_Framework_TestCase
     {
         $array = array();
         foreach ($this->channels->getData() as $channel) {
-            $array[] = $channel->toArray();
+            $array['channels'][] = $channel->toArray();
         }
 
         $json = json_encode($array);

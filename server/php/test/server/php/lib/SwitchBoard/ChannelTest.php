@@ -44,7 +44,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
-        $this->assertEquals('name', $this->channel->getName());
+        $this->assertEquals($this->name, $this->channel->getName());
     }
 
     /**
@@ -62,7 +62,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
      */
     public function testToArray()
     {
-        $expected = array($this->channel->getName() => $this->channel->getData());
+        $expected = array('channel' => $this->channel->getName(), 'data' => $this->channel->getData());
         $this->assertEquals($expected, $this->channel->toArray());
     }
 
