@@ -4,11 +4,23 @@ namespace SwitchBoard;
 use SwitchBoard\Channels;
 use SwitchBoard\Response;
 
+/**
+ *
+ */
 class SwitchBoard
 {
 
+    /**
+     *
+     * @var \SwitchBoard\SwitchBoard
+     */
 	private static $_instance = null;
 
+    /**
+     * Collection of Channel
+     *
+     * @var \SwitchBoard\Channels
+     */
 	private $channels;
 
     /**
@@ -22,6 +34,12 @@ class SwitchBoard
 		$this->channels[$channel] = $callback;
 	}
 
+    /**
+     * Return the unique SwitchBoard instance
+     *
+     *
+     * @return \self
+     */
 	public static function get()
 	{
 		if(null == self::$_instance)
@@ -78,7 +96,7 @@ class SwitchBoard
     }
 
     /**
-     *
+     * Contructor shoul'nt be called that way, for instance
      */
 	private function __constuct()
 	{
