@@ -9,12 +9,12 @@
     processIsolation="false"
     stopOnFailure="false"
     syntaxCheck="true"
-    bootstrap="./server/php/test/bootstrap.php"
+    bootstrap="./test/bootstrap.php"
     >
 
     <testsuites>
         <testsuite name="SwitchBoard Test">
-            <directory>./server/php/test</directory>
+            <directory>./test</directory>
         </testsuite>
 </testsuites>
 
