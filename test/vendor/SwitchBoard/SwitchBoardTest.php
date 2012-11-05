@@ -1,8 +1,5 @@
 <?php
-
 namespace SwitchBoard;
-
-require_once dirname(__FILE__) . '/../../../lib/SwitchBoard/SwitchBoard.php';
 
 /**
  * Test class for SwitchBoard.

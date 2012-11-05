@@ -1,8 +1,5 @@
 <?php
-
 namespace SwitchBoard\Common;
-
-require_once dirname(__FILE__) . '/../../../../lib/SwitchBoard/Common/Collection.php';
 
 /**
  * Test class for Collection.

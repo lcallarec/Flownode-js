@@ -5,16 +5,7 @@ use SwitchBoard\SwitchBoard;
 use SwitchBoard\Channel;
 use SwitchBoard\Response;
 
-require_once dirname(__FILE__).'/../server/php/ext/Symfony2/Component/ClassLoader/UniversalClassLoader.php';
-
-$loader = new UniversalClassLoader();
-
-$loader->registerNamespaces(array(
-       'Symfony'     => __DIR__.'/../server/php/ext/Symfony2',
-       'SwitchBoard' => __DIR__.'/../server/php/lib'
-));
-
-$loader->register();
+require_once dirname(__FILE__).'/../vendor/autoload.php';
 
 $data = array('open.remote.modal.closure'  => array('erk' => 'blue'),
               'open.remote.modal.function' => array('erk' => 'blue'),

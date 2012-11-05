@@ -1,0 +1,17 @@
+{
+    "name": "SwitchBoard",
+    "description": "Simple way to manage client->server->client communications",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "lcallarec",
+            "email": "l.callarec@gmail.com"
+        }
+    ],
+     "autoload": {
+        "psr-0": {"SwitchBoard": "vendor/"}
+    },
+    "require": {
+
+    }
+}
