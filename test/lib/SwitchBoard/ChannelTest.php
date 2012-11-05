@@ -1,8 +1,7 @@
 <?php
-
 namespace SwitchBoard;
 
-require_once dirname(__FILE__) . '/../../../../../lib/SwitchBoard/Channel.php';
+require_once dirname(__FILE__) . '/../../../lib/SwitchBoard/Channel.php';
 
 /**
  * Test class for Channel.

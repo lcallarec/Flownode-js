@@ -2,7 +2,7 @@
 
 namespace SwitchBoard;
 
-require_once dirname(__FILE__) . '/../../../../../lib/SwitchBoard/Channels.php';
+require_once dirname(__FILE__) . '/../../../lib/SwitchBoard/Channels.php';
 
 /**
  * Test class for Channels.
@@ -36,7 +36,6 @@ class ChannelsTest extends \PHPUnit_Framework_TestCase
         $channel = new Channel($this->name, array('test' => 'pk'));
 
         $this->channels->append($channel);
-
     }
 
     /**
