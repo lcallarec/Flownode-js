@@ -41,6 +41,7 @@ class ChannelTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetName()
     {
+ 
         $this->assertEquals($this->name, $this->channel->getName());
     }
 

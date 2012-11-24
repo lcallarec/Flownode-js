@@ -1,6 +1,5 @@
 <?php
 ini_set('error_reporting', E_ALL);
-use Symfony\Component\ClassLoader\UniversalClassLoader;
 use SwitchBoard\SwitchBoard;
 use SwitchBoard\Channel;
 use SwitchBoard\Response;
