@@ -21,7 +21,8 @@ This projects aims to formalize and unify the way request / response are handled
 * Flownode.SwitchBoard will be kept _simple_ and _generic_
 
 #### Exemple of use
-```
+
+```javascript
 //Register a callback function
 sb = Flownode.SwitchBoard
 
