@@ -3,15 +3,15 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../client/lib/qunit.css">
-	<script src="../client/ext/jquery.1.7.2.min.js"></script>
-	<script src="../client/lib/SwitchBoard.js"></script>
-	<script src="../client/lib/qunit.js"></script>
+	<script src="../src/ext/jquery.1.7.2.min.js"></script>
+	<script src="../src/lib/SwitchBoard.js"></script>
+	<script src="../src/lib/qunit.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
 
-    sb = new SwitchBoard();
+    sb = Flownode.SwitchBoard ;
 
     sb.register('alert', function(data) {
 
@@ -19,7 +19,9 @@
 
     })
 
-    sb.connect('http://localhost:8080/exemple/index.php', {'open.test' : {a: 5}}, 'POST');
+    response = new Flownode.SwitchBoard.Request();
+
+    response.send('http://www.flownode.git/exemple/index.php', {'open.test' : {a: 5}}, 'POST');
 
 </script>
 
