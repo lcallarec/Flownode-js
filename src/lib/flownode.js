@@ -144,13 +144,13 @@ Flownode.Switchboard = {
 	}
 };
 
-Flownode.Switchboard.Request = function(data, method) {
+Flownode.Switchboard.Request = function(url, data) {
 
     var $this = this;
     var sb    = Flownode.Switchboard;
 
+    var url    = url;
     var data   = $.extend(data, {});
-    var method = method === 'undefined' ? method : 'GET';
 
    /**
     *
@@ -159,25 +159,28 @@ Flownode.Switchboard.Request = function(data, method) {
     * @param Object		data
     * @param Object 	callbacks	{done: {}, fail: {}}
     **/
-    this.send = function(url, callbacks) {
+    this.send = function(data, callbacks, method) {
 
         var callbacks = $.extend(callbacks, {dones: {}, fails: {}});
+        var data      = $.extend(data, $this.data);
+
+        var method    = method === 'undefined' ? method : 'GET';
 
         var promise = $.ajax({
             type: method,
             url: url,
             dataType: 'json',
-            data: data,
-            success: function(response, status, jqXHR) {
+            data: data
+        }).done(function(response, status, jqXHR){
 
-                for(state in response[sb.namespace]) {
+            for(state in response[sb.namespace]) {
 
                     switch(state) {
                         case 'success':
-                            onGlobalSuccess(response, status, jqXHR);
+                            sb.Request.onSuccess(response, status, jqXHR);
                          break;
                         case 'failure':
-                            onGlobalFailure(response, status, jqXHR);
+                            sb.Request.onFailure(response, status, jqXHR);
                          return;
                         default:
                          break;
@@ -189,13 +192,8 @@ Flownode.Switchboard.Request = function(data, method) {
 
                 }
 
-            },
-            error: function(jqXHR, status, error) {
-
-                $this.onConnectError(jqXHR, status, error);
-            }
-        }).done(function(){
-
+        }).fail(function(jqXHR, status, error) {
+            sb.Request.onResponseError(jqXHR, status, error);
         });
 
         for(done in callbacks.dones) {
@@ -228,7 +226,6 @@ Flownode.Switchboard.Request = function(data, method) {
 
    /**
 	*
-	*
 	**/
 	this.fireAll = function(data) {
 		$.each(data, function(i, data) {
@@ -239,5 +236,13 @@ Flownode.Switchboard.Request = function(data, method) {
 
 };
 
-Flownode.Switchboard.Request.onGlobalSuccess = function(response, status, jqXHR){};
-Flownode.Switchboard.Request.onGlobalFailure = function(response, status, jqXHR){};
+Flownode.Switchboard.Request.onResponseError = function(jqXHR, status, error){
+    alert('Server error : ' + status + ' ' + error);
+};
+
+Flownode.Switchboard.Request.onSuccess = function(response, status, jqXHR){
+    alert('General Request onSucess handler !');
+};
+Flownode.Switchboard.Request.onFailure = function(response, status, jqXHR){
+    alert('General Request onFailure handler ! :');
+};

@@ -1,0 +1,9 @@
+{
+    "switchboard": {
+        "success": {
+            "alert" : {
+                "message": "Hello John Doe !"
+            }
+        }
+    }
+}

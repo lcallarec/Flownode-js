@@ -19,15 +19,21 @@
 
     });
 
-    r1 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
+ var r = new Flownode.Switchboard.Request('/src/test/a.json');
 
-    Flownode.Switchboard.Request.onGlobalSuccess();
+r.send({});
+
+/*
+        r1 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
+
+        Flownode.Switchboard.Request.onGlobalSuccess();
 
 
-    r2 = new Flownode.SwitchBoard.Request({'open.test' : {a: 5}}, 'POST');
+        r2 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
 
 
-    //response.send('http://www.flownode.git/exemple/index.php');
+    response.send('http://www.flownode.git/exemple/index.php');
+    */
 
 </script>
 
