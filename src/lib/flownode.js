@@ -1,4 +1,4 @@
-if(typeof Flownode == 'undefined') {
+if(typeof Flownode === 'undefined') {
     Flownode = {};
 }
 
@@ -8,6 +8,8 @@ if(typeof Flownode == 'undefined') {
 * @param Array collection
 **/
 Flownode.Collection = function(collection) {
+
+    "use strict";
 
    /**
 	*
@@ -19,7 +21,7 @@ Flownode.Collection = function(collection) {
 	*
 	*
 	**/
-	this._nameKeyMap = {}
+	this._nameKeyMap = {};
 
    /**
 	* Internal cursor position
@@ -35,7 +37,7 @@ Flownode.Collection = function(collection) {
 	**/
 	this.length = _collection.length;
 
-	i = 0;
+	var i = 0;
 	for(element in _collection) {
 		this._nameKeyMap[element.toString()] = i;
 		i++;
@@ -44,8 +46,8 @@ Flownode.Collection = function(collection) {
 	/**
 	* Add an object to the collection
 	*
-	* @param string|integer 	name 	Unique key for this object ; may be a string or an integer
-	* @param object  			object	object to store in the collection
+	* @param string|integer name   Unique key for this object ; may be a string or an integer
+	* @param object  		 object	object to store in the collection
 	**/
 	this.add = function(name, object) {
 
@@ -57,7 +59,7 @@ Flownode.Collection = function(collection) {
 		* @see this.getByName()
 		**/
 		this._nameKeyMap[name] = _collection.length - 1;
-	}
+	};
 
 	/**
 	*
@@ -74,42 +76,37 @@ Flownode.Collection = function(collection) {
 		}
 
 		return _collection[this._nameKeyMap[name]];
-	}
+	};
 
 	/**
-	*
 	* Cursor is move to next position
-	*
 	*/
 	this.next = function() {
 		return _collection[this._i++];
-	}
+	};
 
 	/**
-	*
 	*
 	**/
 	this.previous = function() {
 		return _collection[this._i--];
-	}
+	};
 
 	/**
-	*
 	*
 	**/
 	this.current = function() {
 		return _collection[this._i];
-	}
+	};
 
 	/**
-	*
-	*
 	**/
 	this.isEmpty = function() {
-		return this.length != 0;
-	}
+		return this.length !== 0;
+	};
 
-}
+};
+
 /**
 * Core
 *
@@ -144,74 +141,73 @@ Flownode.SwitchBoard = {
 	**/
 	getChannel : function(name) {
 		return this.channels.getByName(name);
-	},
-    onConnectSuccess : function(){},
-    onConnectError   : function(){},
-    onConnectDone    : function(){}
-
+	}
 };
 
-Flownode.SwitchBoard.Request = function() {
+Flownode.SwitchBoard.Request = function(data, method) {
 
-   var $this = this;
-   var sb    = Flownode.SwitchBoard;
+    var $this = this;
+    var sb    = Flownode.SwitchBoard;
 
-  /**
-   *
-   * @param string 	type
-   * @param string 	url
-   * @param Object		data
-   * @param Object 	callbacks	{done: {}, fail: {}}
-   **/
-   this.send = function(url, data, type, callbacks) {
+    var data   = $.extend(data, {});
+    var method = method === 'undefined' ? method : 'GET';
 
-       var cb = $.extend(callbacks, {dones: {}, fails: {}});
+   /**
+    *
+    * @param string 	type
+    * @param string 	url
+    * @param Object		data
+    * @param Object 	callbacks	{done: {}, fail: {}}
+    **/
+    this.send = function(url, callbacks) {
 
-       var promise = $.ajax({
-           type: type,
-           url: url,
-           dataType: 'json',
-           data: data,
-           success: function(response, status, jqXHR) {
+        var cb = $.extend(callbacks, {dones: {}, fails: {}});
 
-               sb.onConnectSuccess();
-               $this.onConnectSuccess();
+        var promise = $.ajax({
+            type: method,
+            url: url,
+            dataType: 'json',
+            data: data,
+            success: function(response, status, jqXHR) {
 
-               for(state in response[sb.namespace]) {
+                for(state in response[sb.namespace]) {
 
-                  switch(state) {
-                    case 'success':
-                            for(command in response[sb.namespace][state]) {
-                                $this.fire(command, response[sb.namespace][state][command]);
-                            }
-                        break;
-                    case 'failure':
-                        return;
-                    default:
-                        break;
-                  }
+                    switch(state) {
+                        case 'success':
+                            onGlobalSuccess(response, status, jqXHR);
+                         break;
+                        case 'failure':
+                            onGlobalFailure(response, status, jqXHR);
+                         return;
+                        default:
+                         break;
+                    }
 
+                    for(command in response[sb.namespace][state]) {
+                        $this.fire(command, response[sb.namespace][state][command]);
+                    }
 
-               }
-           },
-           error: function(jqXHR, status, error) {
-               sb.onConnectError(jqXHR, status, error);
-               $this.onConnectError(jqXHR, status, error);
-           }
-       }).done(function(){
-           sb.onConnectDone();
-           $this.onConnectDone();
-       });
+                }
 
-//       for(done in callbacks.dones) {
-//        promise.done(done);
-//       }
-//
-//       for(fail in callbacks.fails) {
-//        promise.fail(fail);
-//       }
+            },
+            error: function(jqXHR, status, error) {
 
-   };
+                $this.onConnectError(jqXHR, status, error);
+            }
+        }).done(function(){
+
+        });
+
+        for(done in callbacks.dones) {
+          promise.done(done);
+        }
+
+        for(fail in callbacks.fails) {
+          promise.fail(fail);
+        }
+
+        return $this;
+    };
 
   /**
 	*
@@ -219,16 +215,16 @@ Flownode.SwitchBoard.Request = function() {
 	* @param
 	**/
 	this.fire = function(channel, data) {
-		if(typeof data == 'undefined') {
+		if(typeof data === 'undefined') {
 			var data = {};
 		}
 
 		var command = sb.getChannel(channel);
-		if(null != command) {
+		if(null !== command) {
 			command.call(this, data);
 		}
 
-	}
+	};
 
    /**
 	*
@@ -237,12 +233,11 @@ Flownode.SwitchBoard.Request = function() {
 	this.fireAll = function(data) {
 		$.each(data, function(i, data) {
 			$this.fire(data.channel, data.command);
-		})
+		});
 
-	}
+	};
 
-    this.onConnectSuccess = function(){};
-    this.onConnectError   = function(){};
-    this.onConnectDone    = function(){};
-}
+};
 
+Flownode.SwitchBoard.Request.onGlobalSuccess = function(response, status, jqXHR){};
+Flownode.SwitchBoard.Request.onGlobalFailure = function(response, status, jqXHR){};
