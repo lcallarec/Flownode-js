@@ -71,7 +71,7 @@ Flownode.Collection = function(collection) {
 
 		var element = _collection[this._nameKeyMap[name]];
 
-		if(typeof element == 'undefined') {
+		if(typeof element === 'undefined') {
 			return null;
 		}
 
@@ -112,7 +112,7 @@ Flownode.Collection = function(collection) {
 *
 *
 **/
-Flownode.SwitchBoard = {
+Flownode.Switchboard = {
 
     namespace : 'switchboard',
 
@@ -144,10 +144,10 @@ Flownode.SwitchBoard = {
 	}
 };
 
-Flownode.SwitchBoard.Request = function(data, method) {
+Flownode.Switchboard.Request = function(data, method) {
 
     var $this = this;
-    var sb    = Flownode.SwitchBoard;
+    var sb    = Flownode.Switchboard;
 
     var data   = $.extend(data, {});
     var method = method === 'undefined' ? method : 'GET';
@@ -161,7 +161,7 @@ Flownode.SwitchBoard.Request = function(data, method) {
     **/
     this.send = function(url, callbacks) {
 
-        var cb = $.extend(callbacks, {dones: {}, fails: {}});
+        var callbacks = $.extend(callbacks, {dones: {}, fails: {}});
 
         var promise = $.ajax({
             type: method,
@@ -239,5 +239,5 @@ Flownode.SwitchBoard.Request = function(data, method) {
 
 };
 
-Flownode.SwitchBoard.Request.onGlobalSuccess = function(response, status, jqXHR){};
-Flownode.SwitchBoard.Request.onGlobalFailure = function(response, status, jqXHR){};
+Flownode.Switchboard.Request.onGlobalSuccess = function(response, status, jqXHR){};
+Flownode.Switchboard.Request.onGlobalFailure = function(response, status, jqXHR){};

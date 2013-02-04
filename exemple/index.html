@@ -4,24 +4,30 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="../client/lib/qunit.css">
 	<script src="../src/ext/jquery.1.7.2.min.js"></script>
-	<script src="../src/lib/SwitchBoard.js"></script>
+	<script src="../src/lib/flownode.js"></script>
 	<script src="../src/lib/qunit.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
 
-    sb = Flownode.SwitchBoard ;
+    sb = Flownode.Switchboard ;
 
     sb.register('alert', function(data) {
 
         alert(data.message);
 
-    })
+    });
 
-    response = new Flownode.SwitchBoard.Request();
+    r1 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
 
-    response.send('http://www.flownode.git/exemple/index.php', {'open.test' : {a: 5}}, 'POST');
+    Flownode.Switchboard.Request.onGlobalSuccess();
+
+
+    r2 = new Flownode.SwitchBoard.Request({'open.test' : {a: 5}}, 'POST');
+
+
+    //response.send('http://www.flownode.git/exemple/index.php');
 
 </script>
 
