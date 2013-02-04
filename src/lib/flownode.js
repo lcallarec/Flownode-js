@@ -144,7 +144,7 @@ Flownode.Switchboard = {
 	}
 };
 
-Flownode.Switchboard.Request = function(url, data) {
+Flownode.Switchboard.Xhr = function(url, data) {
 
     var $this = this;
     var sb    = Flownode.Switchboard;
@@ -177,10 +177,10 @@ Flownode.Switchboard.Request = function(url, data) {
 
                     switch(state) {
                         case 'success':
-                            sb.Request.onSuccess(response, status, jqXHR);
+                            sb.Xhr.onSuccess(response, status, jqXHR);
                          break;
                         case 'failure':
-                            sb.Request.onFailure(response, status, jqXHR);
+                            sb.Xhr.onFailure(response, status, jqXHR);
                          return;
                         default:
                          break;
@@ -193,7 +193,7 @@ Flownode.Switchboard.Request = function(url, data) {
                 }
 
         }).fail(function(jqXHR, status, error) {
-            sb.Request.onResponseError(jqXHR, status, error);
+            sb.Xhr.onResponseError(jqXHR, status, error);
         });
 
         for(done in callbacks.dones) {
@@ -236,13 +236,13 @@ Flownode.Switchboard.Request = function(url, data) {
 
 };
 
-Flownode.Switchboard.Request.onResponseError = function(jqXHR, status, error){
+Flownode.Switchboard.Xhr.onResponseError = function(jqXHR, status, error){
     alert('Server error : ' + status + ' ' + error);
 };
 
-Flownode.Switchboard.Request.onSuccess = function(response, status, jqXHR){
-    alert('General Request onSucess handler !');
+Flownode.Switchboard.Xhr.onSuccess = function(response, status, jqXHR){
+    alert('General Xhr onSucess handler !');
 };
-Flownode.Switchboard.Request.onFailure = function(response, status, jqXHR){
-    alert('General Request onFailure handler ! :');
+Flownode.Switchboard.Xhr.onFailure = function(response, status, jqXHR){
+    alert('General Xhr onFailure handler ! :');
 };

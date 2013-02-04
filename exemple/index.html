@@ -19,9 +19,10 @@
 
     });
 
- var r = new Flownode.Switchboard.Request('/src/test/a.json');
+ var r = new Flownode.Switchboard.Xhr('/src/test/a.json');
 
 r.send({});
+
 
 /*
         r1 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
