@@ -141,13 +141,42 @@ Flownode.Switchboard = {
 	**/
 	getChannel : function(name) {
 		return this.channels.getByName(name);
+	},
+
+
+
+  /**
+	*
+	* @param
+	* @param
+	**/
+	fire : function(channel, data) {
+		if(typeof data === 'undefined') {
+			var data = {};
+		}
+
+		var command = this.getChannel(channel);
+		if(null !== command) {
+			command.call(this, data);
+		}
+
+	},
+
+   /**
+	*
+	**/
+	fireAll : function(data) {
+		$.each(data, function(i, data) {
+			this.fire(data.channel, data.command);
+		});
+
 	}
 };
 
 Flownode.Switchboard.Xhr = function(url, data) {
 
     var that  = this;
-    
+
     var sb    = Flownode.Switchboard;
 
     Flownode.Xhr.call(this, url, data);
@@ -181,7 +210,7 @@ Flownode.Switchboard.Xhr = function(url, data) {
                     }
 
                     for(command in response[sb.namespace][state]) {
-                        that.fire(command, response[sb.namespace][state][command]);
+                        sb.fire(command, response[sb.namespace][state][command]);
                     }
 
                 }
@@ -193,35 +222,6 @@ Flownode.Switchboard.Xhr = function(url, data) {
         return this.resolve({});
 
     };
-
-
-
-  /**
-	*
-	* @param
-	* @param
-	**/
-	this.fire = function(channel, data) {
-		if(typeof data === 'undefined') {
-			var data = {};
-		}
-
-		var command = sb.getChannel(channel);
-		if(null !== command) {
-			command.call(this, data);
-		}
-
-	};
-
-   /**
-	*
-	**/
-	this.fireAll = function(data) {
-		$.each(data, function(i, data) {
-			$this.fire(data.channel, data.command);
-		});
-
-	};
 
 };
 
