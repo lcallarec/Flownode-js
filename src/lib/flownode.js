@@ -146,13 +146,15 @@ Flownode.Switchboard = {
 
 Flownode.Switchboard.Xhr = function(url, data) {
 
-    var $this = this;
+    var that  = this;
+    
     var sb    = Flownode.Switchboard;
 
-    var url    = url;
-    var data   = $.extend(data, {});
+    Flownode.Xhr.call(this, url, data);
 
-   /**
+    this.__send = this.send;
+
+    /**
     *
     * @param string 	type
     * @param string 	url
@@ -161,17 +163,9 @@ Flownode.Switchboard.Xhr = function(url, data) {
     **/
     this.send = function(data, callbacks, method) {
 
-        var callbacks = $.extend(callbacks, {dones: {}, fails: {}});
-        var data      = $.extend(data, $this.data);
+        this.promise = this.__send(data, callbacks, method);
 
-        var method    = method === 'undefined' ? method : 'GET';
-
-        var promise = $.ajax({
-            type: method,
-            url: url,
-            dataType: 'json',
-            data: data
-        }).done(function(response, status, jqXHR){
+        this.promise.done(function(response, status, jqXHR){
 
             for(state in response[sb.namespace]) {
 
@@ -187,7 +181,7 @@ Flownode.Switchboard.Xhr = function(url, data) {
                     }
 
                     for(command in response[sb.namespace][state]) {
-                        $this.fire(command, response[sb.namespace][state][command]);
+                        that.fire(command, response[sb.namespace][state][command]);
                     }
 
                 }
@@ -196,16 +190,11 @@ Flownode.Switchboard.Xhr = function(url, data) {
             sb.Xhr.onResponseError(jqXHR, status, error);
         });
 
-        for(done in callbacks.dones) {
-          promise.done(done);
-        }
+        return this.resolve({});
 
-        for(fail in callbacks.fails) {
-          promise.fail(fail);
-        }
-
-        return $this;
     };
+
+
 
   /**
 	*
@@ -246,3 +235,52 @@ Flownode.Switchboard.Xhr.onSuccess = function(response, status, jqXHR){
 Flownode.Switchboard.Xhr.onFailure = function(response, status, jqXHR){
     alert('General Xhr onFailure handler ! :');
 };
+
+Flownode.Xhr = function(url, data) {
+
+    var url    = url;
+    var data   = $.extend(data, {});
+
+   /**
+    *
+    * @param string 	type
+    * @param string 	url
+    * @param Object		data
+    * @param Object 	callbacks	{done: {}, fail: {}}
+    **/
+    this.send = function(data, callbacks, method) {
+
+        this.callbacks = $.extend(callbacks, {dones: {}, fails: {}});
+        this.data      = $.extend(data, this.data);
+
+        this.method    = method === 'undefined' ? method : 'GET';
+
+        this.promise = $.ajax({
+            type: method,
+            url: url,
+            dataType: 'json',
+            data: data
+        });
+
+        return this.promise;
+    };
+
+    this.resolve = function(callbacks) {
+
+        this.callbacks = $.extend(callbacks, this.callbacks);
+
+        for(done in this.callbacks.dones) {
+          promise.done(done);
+        }
+
+        for(fail in this.callbacks.fails) {
+          promise.fail(fail);
+        }
+
+        return this;
+    };
+
+    return this;
+
+};
+
