@@ -188,7 +188,7 @@ Flownode.Switchboard.Xhr = function(url, data) {
     * @param string 	type
     * @param string 	url
     * @param Object		data
-    * @param Object 	callbacks	{done: {}, fail: {}}
+    * @param Object 	callbacks	{dones: [], fails: []}
     **/
     this.send = function(data, callbacks, method) {
 
@@ -204,7 +204,6 @@ Flownode.Switchboard.Xhr = function(url, data) {
                          break;
                         case 'failure':
                             sb.Xhr.onFailure(response, status, jqXHR);
-                         return;
                         default:
                          break;
                     }
@@ -219,21 +218,23 @@ Flownode.Switchboard.Xhr = function(url, data) {
             sb.Xhr.onResponseError(jqXHR, status, error);
         });
 
-        return this.resolve({});
+        return this.resolve({dones: [], fails: []});
 
     };
+
+    return this;
 
 };
 
 Flownode.Switchboard.Xhr.onResponseError = function(jqXHR, status, error){
-    alert('Server error : ' + status + ' ' + error);
+    //alert('Server error : ' + status + ' ' + error);
 };
 
 Flownode.Switchboard.Xhr.onSuccess = function(response, status, jqXHR){
-    alert('General Xhr onSucess handler !');
+    //alert('General Xhr onSucess handler !');
 };
 Flownode.Switchboard.Xhr.onFailure = function(response, status, jqXHR){
-    alert('General Xhr onFailure handler ! :');
+    //alert('General Xhr onFailure handler ! :');
 };
 
 Flownode.Xhr = function(url, data) {
@@ -250,7 +251,7 @@ Flownode.Xhr = function(url, data) {
     **/
     this.send = function(data, callbacks, method) {
 
-        this.callbacks = $.extend(callbacks, {dones: {}, fails: {}});
+        this.callbacks = $.extend({dones: [], fails: []}, callbacks);
         this.data      = $.extend(data, this.data);
 
         this.method    = method === 'undefined' ? method : 'GET';
@@ -269,12 +270,12 @@ Flownode.Xhr = function(url, data) {
 
         this.callbacks = $.extend(callbacks, this.callbacks);
 
-        for(done in this.callbacks.dones) {
-          promise.done(done);
+        for(var i in this.callbacks.dones) {
+          this.promise.done(this.callbacks.dones[i]);
         }
 
-        for(fail in this.callbacks.fails) {
-          promise.fail(fail);
+        for(var i in this.callbacks.fails) {
+          this.promise.fail(this.callbacks.fails[i]);
         }
 
         return this;
