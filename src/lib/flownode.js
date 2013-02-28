@@ -259,7 +259,6 @@ Flownode.Xhr = function(url, data) {
         this.promise = $.ajax({
             type: method,
             url: url,
-            dataType: 'json',
             data: data
         });
 
