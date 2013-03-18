@@ -11,15 +11,15 @@ Flownode.js
 
 ```javascript
 //Register a callback function
-sb = Flownode.SwitchBoard
+sb = Flownode.SwitchBoard;
 
 sb.register('alert', function(data) {
     alert(data.message);
-})
+});
 
-response = new Flownode.Switchboard.Request();
+request = new sb.Xhr('http://www.flownode.git/exemple/index.php');
 
-response.send('http://www.flownode.git/exemple/index.php', {'name' : 'John Doe'});
+request.send({'name' : 'John Doe'});
 
 //If the server send back a well formatted JSON response like :
 //{sucess: {alert : {message: 'Hello John Doe !'}}
