@@ -11,19 +11,19 @@ Flownode.Collection = function(collection) {
 
     "use strict";
 
-   /**
-	*
-	*
-	**/
-	var _collection = collection;
+    /**
+    *
+    *
+    **/
+    var _collection = collection;
 
-   /**
-	*
-	*
-	**/
-	this._nameKeyMap = {};
+    /**
+    *
+    *
+    **/
+    this._nameKeyMap = {};
 
-   /**
+    /**
 	* Internal cursor position
 	* By default, it is on last position
 	*
@@ -51,14 +51,14 @@ Flownode.Collection = function(collection) {
 	**/
 	this.add = function(name, object) {
 
-		_collection.push(object);
+    _collection.push(object);
 
-		/**
-		* Used to retrieve easily object in collection by its name
+    /**
+    * Used to retrieve easily object in collection by its name
 
-		* @see this.getByName()
-		**/
-		this._nameKeyMap[name] = _collection.length - 1;
+    * @see this.getByName()
+    **/
+    this._nameKeyMap[name] = _collection.length - 1;
 	};
 
 	/**
@@ -142,10 +142,7 @@ Flownode.Switchboard = {
 	getChannel : function(name) {
 		return this.channels.getByName(name);
 	},
-
-
-
-  /**
+        /**
 	*
 	* @param
 	* @param
@@ -221,20 +218,17 @@ Flownode.Switchboard.Xhr = function(url, data) {
         return this.resolve({dones: [], fails: []});
 
     };
-
-    return this;
-
 };
 
 Flownode.Switchboard.Xhr.onResponseError = function(jqXHR, status, error){
-    //alert('Server error : ' + status + ' ' + error);
+
 };
 
 Flownode.Switchboard.Xhr.onSuccess = function(response, status, jqXHR){
-    //alert('General Xhr onSucess handler !');
+
 };
 Flownode.Switchboard.Xhr.onFailure = function(response, status, jqXHR){
-    //alert('General Xhr onFailure handler ! :');
+
 };
 
 Flownode.Xhr = function(url, data) {
@@ -253,11 +247,19 @@ Flownode.Xhr = function(url, data) {
 
         this.callbacks = $.extend({dones: [], fails: []}, callbacks);
         this.data      = $.extend(data, this.data);
-
-        this.method    = method === 'undefined' ? method : 'GET';
+        
+        if(method !== 'undefined') {
+            this.method = 'GET';
+        } else {
+            if(typeof data == 'string') {
+                this.method = 'GET';
+            } else {
+                this.method = 'POST';
+            }
+        }
 
         this.promise = $.ajax({
-            type: method,
+            type: this.method,
             url: url,
             data: data
         });
@@ -283,4 +285,3 @@ Flownode.Xhr = function(url, data) {
     return this;
 
 };
-
