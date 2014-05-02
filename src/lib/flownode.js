@@ -6,7 +6,7 @@ if(typeof Flownode === 'undefined') {
  * @param {Array} collection
  * @constructor
  **/
-Flownode.Collection = function(collection) {
+Flownode.Channels = function(collection) {
 
     "use strict";
 
@@ -124,9 +124,9 @@ Flownode = {
     /**
      * Channels are a set of named callback functions
      *
-     * @type {Flownode.Collection} Collection
+     * @type {Flownode.Channels} Collection
      **/
-    channels : new Flownode.Collection([]),
+    channels : new Flownode.Channels([]),
 
     /**
      * Register a callback in channels
