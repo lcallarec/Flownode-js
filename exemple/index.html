@@ -2,39 +2,30 @@
 <html dir="ltr" lang="en-US">
 <head>
 	<meta charset="utf-8">
-	<link rel="stylesheet" href="../client/lib/qunit.css">
+	<link rel="stylesheet" href="../src/ext/qunit.css">
 	<script src="../src/ext/jquery.1.7.2.min.js"></script>
 	<script src="../src/lib/flownode.js"></script>
-	<script src="../src/lib/qunit.js"></script>
+	<script src="../src/ext/qunit.js"></script>
 </head>
 <body>
 
 <script type="text/javascript">
 
-    sb = Flownode.Switchboard ;
 
-    sb.register('alert', function(data) {
+    Flownode.register('success.alert', function(data) {
 
-        alert(data.message);
+        alert('Succes ' + data.message);
 
     });
 
- var r = new Flownode.Switchboard.Xhr('/src/test/a.json');
+    Flownode.register('error.alert', function(data) {
 
-r.send({});
+        alert('error ' + data.message);
 
+    });
 
-/*
-        r1 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
+    new Flownode.Xhr('/src/test/a.json').send({message: 'hello'});
 
-        Flownode.Switchboard.Request.onGlobalSuccess();
-
-
-        r2 = new Flownode.Switchboard.Request({'open.test' : {a: 5}}, 'POST');
-
-
-    response.send('http://www.flownode.git/exemple/index.php');
-    */
 
 </script>
 
