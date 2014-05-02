@@ -11,7 +11,11 @@ Flownode-js
 
 ```javascript
 //Register a callback function
-Flownode.register('alert', function(data) {
+Flownode.register('success.alert', function(data) {
+    alert(data.message);
+});
+
+Flownode.register('error.log', function(data) {
     alert(data.message);
 });
 
@@ -21,17 +25,20 @@ new Flownode
 ;
 ```
 
-If the server send back a well formatted JSON response like :
+Return a JSON response like that to trigger the registered callbacks :
 ```javascript
 {
     response: {
         success: {
             alert : {
-                message: 'Hello John Doe !'
+                message: 'Success !'
             }
-        }
+        },
+        error: {
+            log : {
+                message: 'Error'
+            }
+        },
     }
 }
 ```
-
-The regsitered callback will be fired to alert() the message
