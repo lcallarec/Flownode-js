@@ -1,27 +1,37 @@
-Flownode.js
+Flownode-js
 ===========
 
 ### Flownode-js objectives
 
 * Help developpers to code better and maintain client->server->client communications
-* Flownode.SwitchBoard is just a foundation of something more unified (as a client/server UI framework ... )
-* Flownode.SwitchBoard will be kept _simple_ and _generic_
+* Flownode-js is just a foundation
+* Flownode-js will be kept _simple_ and _generic_
 
 #### Exemple of use
 
 ```javascript
 //Register a callback function
-sb = Flownode.SwitchBoard;
-
-sb.register('alert', function(data) {
+Flownode.register('alert', function(data) {
     alert(data.message);
 });
 
-request = new sb.Xhr('http://www.flownode.git/exemple/index.php');
-
-request.send({'name' : 'John Doe'});
-
-//If the server send back a well formatted JSON response like :
-//{sucess: {alert : {message: 'Hello John Doe !'}}
-//The regsitered callback will be fired to alert() the message
+new Flownode
+    .Xhr('http://www.flownode.git/exemple/index.php')
+    .send({'name' : 'John Doe'})
+;
 ```
+
+If the server send back a well formatted JSON response like :
+```javascript
+{
+    response: {
+        success: {
+            alert : {
+                message: 'Hello John Doe !'
+            }
+        }
+    }
+}
+```
+
+The regsitered callback will be fired to alert() the message
