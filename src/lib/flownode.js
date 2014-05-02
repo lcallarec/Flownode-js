@@ -188,9 +188,11 @@ Flownode = {
  * @param data
  * @constructor
  */
-Flownode.Xhr = function(url, data) {
+Flownode.Xhr = function(url, method) {
 
-    Flownode._Xhr.call(this, url, data);
+    this.method = method !== 'undefined' ? method : 'GET';
+
+    Flownode._Xhr.call(this, url, this.method);
 
     this.__send = this.send;
 
@@ -200,7 +202,7 @@ Flownode.Xhr = function(url, data) {
      * @param {Object} 	callbacks	({done: {}, fail: {}})
      * @param {String} method       http method
      **/
-    this.send = function(data, callbacks, method) {
+    this.send = function(data, callbacks) {
 
         this.promise = this.__send(data, callbacks, method);
 
@@ -246,12 +248,6 @@ Flownode._Xhr = function(url, data) {
     var url    = url;
 
     /**
-     * @private
-     * @type {Object}
-     */
-    var data   = $.extend(data, {});
-
-    /**
      * @function
      * @private
      * @param {Object}	data
@@ -261,12 +257,9 @@ Flownode._Xhr = function(url, data) {
     this.send = function(data, callbacks, method) {
 
         this.callbacks = $.extend({dones: [], fails: []}, callbacks);
-        this.data      = $.extend(data, this.data);
-
-        this.method    = method !== 'undefined' ? method : 'GET';
 
         this.promise = $.ajax({
-            type: this.method,
+            type: method,
             url: url,
             data: data,
             dataType: 'json'
