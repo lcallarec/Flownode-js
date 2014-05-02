@@ -145,23 +145,23 @@ Flownode = {
      * @param {String}		name 		Fully qualified (and unique) callback name
      * @returns {Function}
      **/
-    getCallbackByChannel : function(name) {
+    getCallbackByCommand : function(name) {
         return this.channels.getByName(name);
     },
 
     /**
-     * Fire the specified callback for this channel
+     * Fire the specified callback for this command
      * @function
-     * @param {String}  channel
+     * @param {String}  command
      * @param {*}       data
      * @returns {void}
      **/
-    fire : function(channel, data) {
+    fire : function(command, data) {
         if(typeof data === 'undefined') {
             data = {};
         }
 
-        var callback = this.getCallbackByChannel(channel);
+        var callback = this.getCallbackByCommand(command);
         if(null !== callback) {
             callback.call(this, data);
         }
@@ -212,16 +212,15 @@ Flownode.Xhr = function(url, data) {
                     case 'success':
                         Flownode.Xhr.onSuccess(response, status, jqXHR);
                         break;
-                    case 'failure':
-                        Flownode.Xhr.onFailure(response, status, jqXHR);
+                    case 'error':
+                        Flownode.Xhr.onError(response, status, jqXHR);
                     default:
                         break;
                 }
 
-                for(var callback in response[Flownode.namespace][state]) {
-                    Flownode.fire(callback, response[Flownode.namespace][state][callback]);
+                for(var suffix in response[Flownode.namespace][state]) {
+                    Flownode.fire(state + '.' + suffix, response[Flownode.namespace][state][suffix]);
                 }
-
             }
 
         }).fail(function(jqXHR, status, error) {
@@ -236,7 +235,7 @@ Flownode.Xhr = function(url, data) {
 
 Flownode.Xhr.onResponseError = function(jqXHR, status, error){};
 Flownode.Xhr.onSuccess = function(response, status, jqXHR){};
-Flownode.Xhr.onFailure = function(response, status, jqXHR){};
+Flownode.Xhr.onError = function(response, status, jqXHR){};
 
 Flownode._Xhr = function(url, data) {
 
