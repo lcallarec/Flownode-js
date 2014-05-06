@@ -40,13 +40,13 @@ Flownode = {
     },
 
     /**
-     * Fire the specified callback for this command
+     * Trigger the specified callback for this command
      * @function
      * @param {String}  command
      * @param {*}       data
      * @returns {void}
      **/
-    fire : function(command, data) {
+    trigger : function(command, data) {
         if(typeof data === 'undefined') {
             data = {};
         }
