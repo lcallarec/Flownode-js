@@ -67,14 +67,21 @@ Flownode.Channels = function(collection) {
      * @returns {*}
      **/
     this.getByName = function(name) {
+        return _collection[this._nameKeyMap[name]];
+    };
 
-        var element = _collection[this._nameKeyMap[name]];
+    /**
+     * Check if channels exists
+     * @param {String|Number}	name	Unique name
+     * @returns {boolean}
+     */
+    this.has = function(name) {
 
-        if(typeof element === 'undefined') {
-            return null;
+        if(typeof _collection[this._nameKeyMap[name]] === 'undefined') {
+            return false;
         }
 
-        return _collection[this._nameKeyMap[name]];
+        return true;
     };
 
     /**
