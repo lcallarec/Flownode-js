@@ -34,10 +34,10 @@ Flownode.Http = function(url, method) {
 
                 switch(state) {
                     case 'success':
-                        Flownode.Http.onSuccess(_response, status, jqXHR);
+                        Flownode.Http.onAPISuccess(_response, status, jqXHR);
                         break;
                     case 'error':
-                        Flownode.Http.onError(_response, status, jqXHR);
+                        Flownode.Http.onAPIError(_response, status, jqXHR);
                     default:
                         break;
                 }
@@ -56,8 +56,10 @@ Flownode.Http = function(url, method) {
                 }
             }
 
+            Flownode.Http.onServerSuccess(jqXHR, status, error);
+
         }).fail(function(jqXHR, status, error) {
-            Flownode.Http.onResponseError(jqXHR, status, error);
+            Flownode.Http.onServerError(jqXHR, status, error);
         });
 
         return this.resolve();
@@ -66,10 +68,12 @@ Flownode.Http = function(url, method) {
 
 };
 
-Flownode.Http.onResponseError = function(jqXHR, status, error){};
-Flownode.Http.onSuccess = function(_response, status, jqXHR){};
-Flownode.Http.onError = function(_response, status, jqXHR){};
-
+/**
+ * Base Http function
+ * @param {String} url
+ * @returns {Flownode}
+ * @private
+ */
 Flownode._Http = function(url) {
 
     /**
@@ -116,3 +120,37 @@ Flownode._Http = function(url) {
 
     return this;
 };
+
+/**
+ * Functions triggered on every response
+ */
+/**
+ * Whenever the server send a successful http reponse
+ * @param _response
+ * @param status
+ * @param jqXHR
+ */
+Flownode.Http.onServerSuccess = function(_response, status, jqXHR){};
+/**
+ * Whenever the server return an error response
+ * @param jqXHR
+ * @param status
+ * @param error
+ */
+Flownode.Http.onServerError   = function(jqXHR, status, error){};
+/**
+ * Whenever the API returns a JSON response with a success attribute
+ * Is triggered before success channels
+ * @param _response
+ * @param status
+ * @param jqXHR
+ */
+Flownode.Http.onAPISuccess    = function(_response, status, jqXHR){};
+/**
+ * Whenever the API returns a JSON response with an error attribute
+ * Is triggered before error channels
+ * @param _response
+ * @param status
+ * @param jqXHR
+ */
+Flownode.Http.onAPIError      = function(_response, status, jqXHR){};
