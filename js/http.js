@@ -42,8 +42,17 @@ Flownode.Http = function(url, method) {
                         break;
                 }
 
-                for(var suffix in _response[state]) {
-                    Flownode.trigger(state + '.' + suffix, _response[state][suffix]);
+                for(var channel in _response[state]) {
+
+                    if (Flownode.channels.has(state + '.' + channel)) {
+                        var _channel = state + '.' + channel;
+                    } else if (Flownode.channels.has(channel)){
+                        var _channel = channel;
+                    } else {
+                        continue;
+                    }
+
+                    Flownode.trigger(_channel, _response[state][channel]);
                 }
             }
 
