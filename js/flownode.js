@@ -56,18 +56,5 @@ Flownode = {
             callback.call(this, data);
         }
 
-    },
-
-    /**
-     * Fire all callbacks for all channels
-     * @function
-     * @param {String}  channel
-     * @param {*}       data
-     * @returns {void}
-     **/
-    fireAll : function(data) {
-        $.each(data, function(i, data) {
-            this.fire(data.channel, data.command);
-        });
     }
 };
