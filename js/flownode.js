@@ -7,7 +7,7 @@ if(typeof Flownode === 'undefined') {
 Flownode = {
 
     /**
-     * @type {String} Request / Query / Response namespace
+     * @type {String|null} Request / Query / Response namespace
      */
     namespace : 'response',
 

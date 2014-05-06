@@ -26,22 +26,24 @@ Flownode.Http = function(url, method) {
 
         this.promise = this.__send(data, callbacks, method);
 
-        this.promise.done(function(response, status, jqXHR){
+        this.promise.done(function(response, status, jqXHR) {
 
-            for(var state in response[Flownode.namespace]) {
+            var _response = Flownode.namespace ? response[Flownode.namespace] : response;
+
+            for(var state in _response) {
 
                 switch(state) {
                     case 'success':
-                        Flownode.Http.onSuccess(response, status, jqXHR);
+                        Flownode.Http.onSuccess(_response, status, jqXHR);
                         break;
                     case 'error':
-                        Flownode.Http.onError(response, status, jqXHR);
+                        Flownode.Http.onError(_response, status, jqXHR);
                     default:
                         break;
                 }
 
-                for(var suffix in response[Flownode.namespace][state]) {
-                    Flownode.fire(state + '.' + suffix, response[Flownode.namespace][state][suffix]);
+                for(var suffix in _response[state]) {
+                    Flownode.fire(state + '.' + suffix, _response[state][suffix]);
                 }
             }
 
@@ -56,10 +58,10 @@ Flownode.Http = function(url, method) {
 };
 
 Flownode.Http.onResponseError = function(jqXHR, status, error){};
-Flownode.Http.onSuccess = function(response, status, jqXHR){};
-Flownode.Http.onError = function(response, status, jqXHR){};
+Flownode.Http.onSuccess = function(_response, status, jqXHR){};
+Flownode.Http.onError = function(_response, status, jqXHR){};
 
-Flownode._Http = function(url, data) {
+Flownode._Http = function(url) {
 
     /**
      * @private
