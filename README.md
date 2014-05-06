@@ -38,7 +38,32 @@ Return a JSON response like that to trigger the registered callbacks :
             log : {
                 message: 'Error'
             }
-        },
+        }
     }
+}
+```
+
+Note that you can globaly set the Flownode.namespace to `null`:
+```javascript
+ Flownode.namespace = null;
+ new Flownode
+     .Http('http://www.flownode.git/exemple/index.php')
+     .send({'name' : 'John Doe'})
+ ;
+ ```
+
+So the JSON response should have this structure:
+```javascript
+{
+    success: {
+        alert : {
+            message: 'Success !'
+        }
+    },
+    error: {
+        log : {
+            message: 'Error'
+        }
+        }
 }
 ```
