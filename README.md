@@ -1,14 +1,18 @@
 Flownode-js
 ===========
 
-# Flownode-js objectives
+## Flownode-js objectives
 
 * Manage JSON client->server->client communications
 * Flownode-js will be kept _simple_ and _generic_
 
-# Basic uses
+## Dependencies
 
-## Register channels
+Needs jQuery >= 1.7.0.
+
+## Basic uses
+
+### Register channels
 
 Channels are just callbacks you'll just have to register in the Flownode object.
 
@@ -24,7 +28,7 @@ Flownode.register('error.log', function(data) {
 });
 ```
 
-## Send the request
+### Send the request
 
 The `Http` function need at least an URL as the first argument, the second - the http method - is optional (default to GET).
 The `send` function accept one optional argument : an object of parameters to be send.
@@ -35,7 +39,7 @@ new Flownode
 ;
 ```
 
-## Server-side JSON response
+### Server-side JSON response
 
 The JSON response should follow this structure:
 
@@ -111,5 +115,9 @@ With the previous JSON response, three channels will be triggered :
 the prefixed channel will have priority over the un-prefixed one, which will not be triggered. That way, the same channels
 can be triggered, whatever the API response they rely on.
 
+## What's next ?
 
+* Don't use some built-in jQuery helpers functions
+* Use other library that jquery to manage xhr
+* Work with other protocol than http
 
