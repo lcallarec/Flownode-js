@@ -60,7 +60,7 @@ Flownode.Http = function(url, method) {
             Flownode.Http.onResponseError(jqXHR, status, error);
         });
 
-        return this.resolve({dones: [], fails: []});
+        return this.resolve();
 
     };
 
@@ -87,7 +87,7 @@ Flownode._Http = function(url) {
      **/
     this.send = function(data, callbacks, method) {
 
-        this.callbacks = $.extend({dones: [], fails: []}, callbacks);
+        this.callbacks = $.extend({onAPISuccess: null, onAPIError: null}, callbacks);
 
         this.promise = $.ajax({
             type: method,
@@ -103,20 +103,13 @@ Flownode._Http = function(url) {
      * Resolve the response
      * @function
      * @private
-     * @param {Array} callbacks functions
      * @returns {Flownode._Xhr}
      */
-    this.resolve = function(callbacks) {
+    this.resolve = function() {
 
-        this.callbacks = $.extend(callbacks, this.callbacks);
+        this.promise.done(this.callbacks.onAPISuccess);
 
-        for(var i in this.callbacks.dones) {
-            this.promise.done(this.callbacks.dones[i]);
-        }
-
-        for(var i in this.callbacks.fails) {
-            this.promise.fail(this.callbacks.fails[i]);
-        }
+        this.promise.fail(this.callbacks.onAPIError);
 
         return this;
     };
