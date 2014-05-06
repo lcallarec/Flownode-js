@@ -20,7 +20,7 @@ Flownode.register('error.log', function(data) {
 });
 
 new Flownode
-    .Xhr('http://www.flownode.git/exemple/index.php')
+    .Http('http://www.flownode.git/exemple/index.php')
     .send({'name' : 'John Doe'})
 ;
 ```
