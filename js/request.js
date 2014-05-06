@@ -8,11 +8,11 @@ if(typeof Flownode === 'undefined') {
  * @param data
  * @constructor
  */
-Flownode.Xhr = function(url, method) {
+Flownode.Http = function(url, method) {
 
     this.method = method !== 'undefined' ? method : 'GET';
 
-    Flownode._Xhr.call(this, url, this.method);
+    Flownode._Http.call(this, url, this.method);
 
     this.__send = this.send;
 
@@ -32,10 +32,10 @@ Flownode.Xhr = function(url, method) {
 
                 switch(state) {
                     case 'success':
-                        Flownode.Xhr.onSuccess(response, status, jqXHR);
+                        Flownode.Http.onSuccess(response, status, jqXHR);
                         break;
                     case 'error':
-                        Flownode.Xhr.onError(response, status, jqXHR);
+                        Flownode.Http.onError(response, status, jqXHR);
                     default:
                         break;
                 }
@@ -46,7 +46,7 @@ Flownode.Xhr = function(url, method) {
             }
 
         }).fail(function(jqXHR, status, error) {
-            Flownode.Xhr.onResponseError(jqXHR, status, error);
+            Flownode.Http.onResponseError(jqXHR, status, error);
         });
 
         return this.resolve({dones: [], fails: []});
@@ -55,11 +55,11 @@ Flownode.Xhr = function(url, method) {
 
 };
 
-Flownode.Xhr.onResponseError = function(jqXHR, status, error){};
-Flownode.Xhr.onSuccess = function(response, status, jqXHR){};
-Flownode.Xhr.onError = function(response, status, jqXHR){};
+Flownode.Http.onResponseError = function(jqXHR, status, error){};
+Flownode.Http.onSuccess = function(response, status, jqXHR){};
+Flownode.Http.onError = function(response, status, jqXHR){};
 
-Flownode._Xhr = function(url, data) {
+Flownode._Http = function(url, data) {
 
     /**
      * @private
