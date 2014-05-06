@@ -43,7 +43,7 @@ Flownode.Http = function(url, method) {
                 }
 
                 for(var suffix in _response[state]) {
-                    Flownode.fire(state + '.' + suffix, _response[state][suffix]);
+                    Flownode.trigger(state + '.' + suffix, _response[state][suffix]);
                 }
             }
 
