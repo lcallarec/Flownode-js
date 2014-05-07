@@ -79,7 +79,7 @@ Flownode._Http = function(url) {
      * @private
      * @type {String}
      */
-    var url    = url;
+    this.url = url;
 
     /**
      * @function
