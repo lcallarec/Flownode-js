@@ -19,7 +19,7 @@ Flownode.Http = function(url, method) {
     /**
      * @function
      * @param {Object}	data
-     * @param {Object} 	callbacks	({done: {}, fail: {}})
+     * @param {Object} 	callbacks   ({onAPISuccess: null, onAPIError: null})
      **/
     this.send = function(data, callbacks) {
 
