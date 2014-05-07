@@ -4,8 +4,8 @@ if(typeof Flownode === 'undefined') {
 
 /**
  *
- * @param url
- * @param data
+ * @param {String}  url
+ * @param {String} method
  * @constructor
  */
 Flownode.Http = function(url, method) {
@@ -20,7 +20,6 @@ Flownode.Http = function(url, method) {
      * @function
      * @param {Object}	data
      * @param {Object} 	callbacks	({done: {}, fail: {}})
-     * @param {String} method       http method
      **/
     this.send = function(data, callbacks) {
 
@@ -38,6 +37,7 @@ Flownode.Http = function(url, method) {
                         break;
                     case 'error':
                         Flownode.Http.onAPIError(_response, status, jqXHR);
+                        brerak;
                     default:
                         break;
                 }
@@ -72,7 +72,6 @@ Flownode.Http = function(url, method) {
  * Base Http function
  * @param {String} url
  * @returns {Flownode}
- * @private
  */
 Flownode._Http = function(url) {
 
@@ -86,7 +85,7 @@ Flownode._Http = function(url) {
      * @function
      * @private
      * @param {Object}	data
-     * @param {Object} 	callbacks	({done: {}, fail: {}})
+     * @param {Object} 	callbacks	({onAPISuccess: null, onAPIError: null})
      * @param {String} method       http method
      **/
     this.send = function(data, callbacks, method) {
@@ -107,7 +106,7 @@ Flownode._Http = function(url) {
      * Resolve the response
      * @function
      * @private
-     * @returns {Flownode._Xhr}
+     * @returns {Flownode._Http}
      */
     this.resolve = function() {
 
