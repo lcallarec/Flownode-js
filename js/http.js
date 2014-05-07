@@ -37,7 +37,7 @@ Flownode.Http = function(url, method) {
                         break;
                     case 'error':
                         Flownode.Http.onAPIError(_response, status, jqXHR);
-                        brerak;
+                        break;;
                     default:
                         break;
                 }
